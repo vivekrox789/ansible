@@ -1,0 +1,32 @@
+---
+- hosts: node01
+  become: yes
+  name: Installing apache2 on node01
+  tasks:
+  - name: Install apache2
+    apt:
+      update_cache: yes
+      name: apache2
+      state: latest
+  - name: Copying the Index file
+    copy:
+      src: apache2_index.html
+      dest: /var/www/html/index.html
+      owner: ubuntu
+      group: ubuntu
+
+- hosts: node02
+  become: yes
+  name: Installing nginx on node02
+  tasks:
+  - name: installing nginx
+    apt:
+      name=nginx
+      state=latest
+  - name: Copying the Index file
+    copy:
+      src: nginx_index.html
+      dest: /var/www/html/index.nginx-debian.html
+      owner: ubuntu
+      group: ubuntu
+
